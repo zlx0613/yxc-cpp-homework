@@ -1,0 +1,94 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+const int N = 30;
+
+int n, k;
+int q[N];
+int arr[N]; 
+int res = 0;
+
+bool is_prim(int sum) {
+	if (sum < 2)return false;
+	for (int i = 2; i * i <= sum; i++) {
+		if (sum % i == 0)return false;
+	}
+	return true;
+}
+void dfs(int x, int start) {
+	if ((x - 1) + n - start + 1 < k) {
+		return;
+	}
+	if (x > k) {
+		int sum = 0;
+		for (int i = 1; i <= k; i++) {
+			sum += arr[i];
+		}
+		if (is_prim(sum)) {
+			res++;
+		}
+		return;
+	}
+	for (int i = start; i <= n; i++) {
+		arr[x] = q[i];
+		dfs(x + 1, i + 1);
+		arr[x] = 0;
+	}
+    }
+int main(){
+	scanf("%d %d", &n, &k);
+	for (int i = 1; i <= n; i++) {
+		scanf("%d", &q[i]);
+	}
+	dfs(1, 1);
+	printf("%d\n", res);
+	return 0;
+}
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+
+const int N = 10010;
+
+int n;
+int arr[N];
+int res = 0;
+int nums[10010] = { 6,2,5,5,4,5,6,3,7,6 };
+
+int col(int x) {
+	if (nums[x])return nums[x];
+	else {
+		int sumFire = 0;
+		while (x) {
+			sumFire += nums[x % 10];
+			x /=10;
+		}
+		return sumFire;
+	}
+}
+void dfs(int x,int sum) {
+	
+	if (sum > n)return;
+	if (x > 3) {
+		if (arr[1] + arr[2] == arr[3]&&sum==n) {
+			res++;
+		}
+		return ;
+	}
+	for (int i = 0; i <= 1000; i++) {
+		arr[x] = i;
+		dfs(x + 1,sum+col(i));
+		arr[x] = 0;
+	}   
+}
+int main() {
+	scanf("%d", &n);
+	n -= 4;
+	dfs(1,0);
+	printf("%d\n", res);
+	return 0;
+}

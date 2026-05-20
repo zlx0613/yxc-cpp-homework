@@ -1,0 +1,51 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+
+const int N = 50010;
+
+int L,n,m;
+int q[N];
+
+bool check(int x) {
+    int i = 0, now = 0;
+    int cnt = 0;
+    while (i < n + 1) {
+        i++;
+        while (q[i] - q[now] < x) {
+            cnt++;
+            if (i < n + 1) {
+                i++;
+            }
+            else {
+                if (cnt <= m)return true;
+                else return false;
+            }
+        }
+       now = i;
+   }
+    if (cnt <= m)return true;
+    else return false;
+}
+int main() {
+    scanf("%d%d%d", &L,&n,&m);
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &q[i]);
+    }
+    q[0] = 0;
+    q[n + 1] = L;
+    int l = 0, r = L+1;
+    while (l + 1 < r) {
+        int mid = (l + r) / 2;
+        if (check(mid)) {
+            l = mid;
+        }
+        else r = mid;
+    }
+    if (check(r))printf("%d\n", r);
+    else 
+        printf("%d\n", l);
+    return 0;
+}

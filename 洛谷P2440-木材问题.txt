@@ -1,0 +1,41 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+
+const int N = 100010;
+
+int n, k;
+int q[N];
+
+bool check(int x) {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += q[i] / x;
+        if (sum >= k)return true;
+    }
+    return false;
+}
+int main() {
+    scanf("%d%d", &n, &k);
+    int longest = 0;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &q[i]);
+        longest = max(q[i], longest);
+    }
+    int sum = 0;
+    int res = 0;
+    int l = 0, r = longest;
+    while (l + 1 < r) {
+        int mid = (l + r) / 2;
+        if (check(mid)) {
+            l = mid;
+        }
+        else r = mid;
+    }
+    if (check(r))printf("%d\n", r);
+    else 
+        printf("%d\n", l);
+    return 0;
+}
