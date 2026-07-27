@@ -1,31 +1,33 @@
 #include<iostream>
 using namespace std;
-int n, m;
-const int N=100010;
+const int N=1e6+10;
 int q[N];
-int main() {
-	scanf("%d%d", &n, &m);
-	for (int i = 0; i < n; i++)scanf("%d", &q[i]);
-	while (m--) {
-		int x;
-		scanf("%d", &x);
-		int l = 0, r = n - 1;
-		while (l < r) {//ÕÒµÚÒ»´Î³öÏÖxµÄÎ»ÖÃ
-			int mid = l + r >> 1;
-			if (q[mid] >=x)r = mid;//if (q[mid] < x)l= mid+1;Ô­À´¸üºÃÀí½â£¬ÖØµãÔÚÓÚmidÈ¡=Ê±Ïò×ó±ß½ç²éÕÒ
-			else l = mid +1;//else r = mid;Èç¹û°ÑÏÂÃæµÄÓÃµ½ÕâÀï£¬È¡=Ê±»áºöÂÔ×ó±ßµÄxÖµ¶øÏòÓÒ±ßÕÒ
-		}
-		if (q[l] != x) cout << "-1 -1" << endl;
-		else {
-			cout << l << " ";//Êä³ö×ó±ß½ç
-			int l = 0, r = n - 1;
-			while (l < r) {//ÕÒ×îºóÒ»´Î³öÏÖxµÄÎ»ÖÃ
-				int mid = l + r + 1 >> 1;
-				if (q[mid] <= x)l = mid;//midÈ¡=Ê±£¬ÏòÓÒ±ß½ç²éÕÒ
-				else r = mid - 1;
-			}
-			cout << l << endl;//Êä³öÓÒ±ß½ç
-		}
-	}
-	return 0;
+int main(){
+    int n,k;
+    cin>>n>>k;
+    for(int i=0;i<n;i++){
+        cin>>q[i];
+    }
+    while(k--){
+        int x;
+        cin>>x;
+        int l=0,r=n-1;
+        while(l<r){
+            int mid=(l+r)/2;
+            if(q[mid]<x) l=mid+1;//åœ¨å–å·¦è¾¹çš„å€¼çš„æ—¶å€™ q[mid]ä¸èƒ½=x å¦‚æœç­‰äºxçš„å·¦è¾¹å¯èƒ½è¿˜æœ‰ç›¸åŒçš„å€¼æ²¡æœ‰å–åˆ° ä½†æ˜¯æ­¤æ—¶l=midäº†
+            else r=mid;
+        }
+        if(x!=q[l])cout<<"-1 -1"<<endl;
+        else {
+            cout<<l<<" ";
+            int l=0,r=n-1;
+            while(l<r){
+                int mid=(l+r+1)/2;
+                if(q[mid]>x)r=mid-1;//åŒç† å–å³è¾¹çš„å€¼çš„æ—¶å€™q[mid]!=x,ä¸ç”¨<çš„åŸå› ï¼šç”¨<åˆ™æ”¹å˜lï¼Œé‚£ä¹ˆä¸‹ä¸€è¡Œrå°±ä¼šå–=ï¼Œå¦‚æœç”¨äº†<= é‚£å°±æ˜¯æŠŠelseå’Œif æ¢äº†ä¸ªä½ç½®
+                else l=mid;
+            }
+            cout<<r<<endl;
+    }
+    }
+    return 0;
 }
